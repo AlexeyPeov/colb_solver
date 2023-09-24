@@ -25,7 +25,7 @@ public:
     }
 
     static bool is_same_color(const Color &c1, const Color &c2){
-        return c1.info == c2.info;
+        return c1 == c2;
     }
     Colb() = default;
 };

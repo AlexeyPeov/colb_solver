@@ -4,20 +4,6 @@
 
 int main() {
 
-#define PINK "pnk"
-#define DARK_GREEN "dgren"
-#define DARK_RED "dread"
-#define GREEN "green"
-#define DARK_WHITE "dwh"
-#define WHITE "wh"
-#define ORANGE "or"
-#define RED "read"
-#define YELLOW "yea"
-#define PURPLE "ppp"
-#define BLUE "bl"
-#define DARK_BLUE "dble"
-
-
     std::vector<Colb> colbs = {
             Colb(Color(PURPLE),Color(GREEN),Color(GREEN),Color(DARK_RED)),
             Colb(Color(PINK),Color(DARK_GREEN),Color(DARK_WHITE),Color(YELLOW)),

@@ -4,12 +4,19 @@
 
 #ifndef COLB_SOLVER_COLOR_H
 #define COLB_SOLVER_COLOR_H
-#include <string>
-struct Color{
-    std::string info;
-    Color(const std::string& color){
-        info = color;
-    }
-    explicit Color() = default;
+
+enum Color {
+    PINK = 1,
+    DARK_GREEN,
+    DARK_RED,
+    GREEN,
+    DARK_WHITE,
+    WHITE,
+    ORANGE,
+    RED,
+    YELLOW,
+    PURPLE,
+    BLUE,
+    DARK_BLUE,
 };
 #endif //COLB_SOLVER_COLOR_H
