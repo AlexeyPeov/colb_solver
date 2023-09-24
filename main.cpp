@@ -21,17 +21,6 @@ int main() {
             Colb(),
     };
 
-/*    std::vector<Colb> colbs = {
-            Colb(Color(PINK),Color(PINK),Color(PINK),Color(BRIGHT_GREEN)),
-            Colb(Color(BRIGHT_GREEN),Color(BRIGHT_GREEN),Color(BRIGHT_GREEN),Color(PINK)),
-
-            Colb(Color(BLUE),Color(BLUE),Color(YELLOW),Color(YELLOW)),
-            Colb(Color(YELLOW),Color(YELLOW),Color(BLUE),Color(BLUE)),
-
-            Colb(),
-            Colb(),
-    };*/
-
     Game game(colbs);
     auto str = game.solve();
 

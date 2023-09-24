@@ -196,22 +196,6 @@ public:
         m_colbs = colbs;
     }
 
-    /*std::vector<std::string> solve() {
-        std::vector<std::string> moves_str;
-        dfs(m_colbs, moves_str);
-        return moves_str;
-    }*/
-    /*std::cout << "stack sz: " << stack.size() << '\n';
-    if(stack.size() > 16){
-        while(moves_str.empty()){
-            std::cout << "pop\n";
-            stack.pop();
-            moves_str = stack.top().second;
-        }
-        std::cout << moves_str.back();
-        return moves_str;
-    }*/
-
     std::vector<std::string> solve() {
         std::vector<std::string> moves_str;
 
@@ -230,7 +214,6 @@ public:
         stack.emplace(colbs, moves_str);
         int aboba = 0;
         while (!stack.empty()) {
-            // Pop the top state from the stack
             auto[curr_state_colbs, moves_string] = stack.top();
             stack.pop();
 
@@ -248,65 +231,15 @@ public:
                 auto str = moves_string;
                 move_color(saved_state[move.from], saved_state[move.to]);
                 str.emplace_back(move_to_string(move));
-
-//                std::cout << "\n";
-//                for(auto& s :  str)
-//                    std::cout << s;
-//                std::cout << "\n";
-
                 stack.emplace(saved_state, str);
             }
             aboba++;
         }
-
-        // If we get here, there is no solution
         std::cout << "iterations: " << aboba << '\n';
         std::cout << "the solution takes " << moves_str.size() << " moves" << '\n';
 
         return moves_str;
- /*       int less = INT32_MAX;
-        int index = 0;
-        for(int i = 0; i < avail.size(); i++){
-            auto& sol = avail[i];
-            int size = sol.size();
-
-            if(size < less){
-                index = i;
-                less = size;
-            }
-        }
-        std::cout << "the fastest solution takes " << avail[index].size() << " moves" << '\n';
-        return avail[index];*/
     }
-
-//        while (!colb_states_stack.empty()) {
-//            auto[curr_state_colbs, str] = colb_states_stack.top();
-//            colb_states_stack.pop();
-//
-//            //std::cout << "stack_sz: " << colb_states_stack.size() << '\n';
-//
-//            if (all_colbs_solved(curr_state_colbs)) {
-//
-//                return {"aboba"};
-//            }
-//
-//            auto possible_moves = get_possible_moves(curr_state_colbs);
-//
-//            for (const auto& move : possible_moves) {
-//                std::vector<Colb> saved_state = curr_state_colbs;
-//                move_color(saved_state[move.from], saved_state[move.to]);
-//
-//
-//
-//                colb_states_stack.emplace(saved_state);
-//            }
-//        }
-//
-//        // If we get here, there is no solution
-//        return {};
-//    }
-
-
 
 };
 
