@@ -6,6 +6,7 @@
 #define COLB_SOLVER_COLOR_H
 
 enum Color {
+    UNKNOWN = 0,
     PINK = 1,
     DARK_GREEN,
     DARK_RED,

@@ -5,21 +5,25 @@
 int main() {
 
     std::vector<Colb> colbs = {
-            Colb(Color(PURPLE),Color(GREEN),Color(GREEN),Color(DARK_RED)),
-            Colb(Color(PINK),Color(DARK_GREEN),Color(DARK_WHITE),Color(YELLOW)),
-            Colb(Color(BLUE),Color(BLUE),Color(DARK_RED),Color(GREEN)),
-            Colb(Color(ORANGE),Color(YELLOW),Color(ORANGE),Color(PINK)),
-            Colb(Color(PURPLE),Color(DARK_GREEN),Color(ORANGE),Color(BLUE)),
-            Colb(Color(BLUE),Color(WHITE),Color(YELLOW),Color(DARK_GREEN)),
-            Colb(Color(PURPLE),Color(RED),Color(WHITE),Color(DARK_RED)),
-            Colb(Color(DARK_BLUE),Color(DARK_BLUE),Color(DARK_BLUE),Color(DARK_GREEN)),
-            Colb(Color(PINK),Color(RED),Color(YELLOW),Color(WHITE)),
-            Colb(Color(PURPLE),Color(RED),Color(DARK_WHITE),Color(DARK_WHITE)),
-            Colb(Color(DARK_RED),Color(DARK_BLUE),Color(PINK),Color(RED)),
-            Colb(Color(DARK_WHITE),Color(GREEN),Color(ORANGE),Color(WHITE)),
+            Colb(Color(DARK_WHITE),Color(GREEN),Color(DARK_RED),Color(PURPLE)),
+            Colb(Color(PURPLE),Color(BLUE),Color(DARK_RED),Color(DARK_GREEN)),
+            Colb(Color(ORANGE),Color(WHITE),Color(ORANGE),Color(DARK_GREEN)),
+            Colb(Color(BLUE),Color(GREEN),Color(DARK_BLUE),Color(RED)),
+            Colb(Color(PINK),Color(PURPLE),Color(YELLOW),Color(RED)),
+            Colb(Color(YELLOW),Color(DARK_GREEN),Color(YELLOW),Color(GREEN)),
+            Colb(Color(DARK_BLUE),Color(DARK_GREEN),Color(BLUE),Color(DARK_BLUE)),
+            Colb(Color(PURPLE),Color(ORANGE),Color(WHITE),Color(ORANGE)),
+            Colb(Color(YELLOW),Color(DARK_BLUE),Color(DARK_WHITE),Color(PINK)),
+            Colb(Color(PINK),Color(DARK_WHITE),Color(GREEN),Color(BLUE)),
+            Colb(Color(RED),Color(DARK_RED),Color(DARK_WHITE),Color(RED)),
+            Colb(Color(WHITE),Color(WHITE),Color(DARK_RED),Color(PINK)),
             Colb(),
-            Colb(),
+            Colb()
     };
+
+
+
+
 
     Game game(colbs);
     auto str = game.solve();

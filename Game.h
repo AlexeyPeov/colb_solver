@@ -66,7 +66,46 @@ class Game {
         return false;
     }
 
-    bool can_move_color(Colb &from, Colb &to){
+    void m_prompt_for_color(Colb &colb, size_t index) {
+        std::cout << "What color is the " << index + 1 << " colb at " << colb.colors.size() << " height?\n"
+        "0 - UNKNOWN\n"
+        "1 - PINK\n"
+        "2 - DARK_GREEN\n"
+        "3 - DARK_RED\n"
+        "4 - GREEN\n"
+        "5 - DARK_WHITE\n"
+        "6 - WHITE\n"
+        "7 - ORANGE\n"
+        "8 - RED\n"
+        "9 - YELLOW\n"
+        "10 - PURPLE\n"
+        "11 - BLUE\n"
+        "12 - DARK_BLUE\n"
+        "Enter: ";
+        size_t col;
+        std::cin >> col;
+        auto c = (Color)col;
+        std::cout << "you've entered : " << c << '\n';
+        if(col){
+            std::cout << "\nHow many?\n";
+            size_t sz;
+            std::cin >> sz;
+            auto& colors = colb.colors;
+            auto& default_colors = m_colbs[index].colors;
+            for(auto i = colors.size() - sz; i < colors.size(); i++){
+                colors[i] = c;
+                default_colors[i] = c;
+
+            }
+            std::cout << "changed colb " << index << " - colors are :" << '\n';
+            for(auto& co : m_colbs[index].colors){
+                std::cout << co << ' ';
+            }
+
+        }
+    }
+
+    bool can_move_color(Colb &from, Colb &to, size_t from_index, size_t to_index) {
         bool moved = false;
 
 
@@ -81,8 +120,26 @@ class Game {
 
         auto& top_from = from.colors.back();
 
+        if(top_from == Color::UNKNOWN){
+            const auto& colb = m_colbs[from_index];
+            const auto index = from.colors.size()-1;
+
+            std::cout
+            << "COULD BE AN EXEPT: colb " << from_index
+            << " color at index: " << index
+            << " - " << (int)colb.colors[index] << '\n';
+
+            if(colb.colors[index] == UNKNOWN){
+                std::cout << "sure is! fuck..\n";
+                throw std::exception();
+            }
+            else{
+                top_from = m_colbs[from_index].colors[index];
+            }
+        }
 
         if(!to.colors.empty()){
+
             if(!Colb::is_same_color(top_from, to.colors.back())){
                 return moved;
             }
@@ -134,7 +191,6 @@ class Game {
         return moved;
     }
 
-
     std::string move_to_string(const Move &move){
         return "colb " + std::to_string(move.from + 1) + " to colb " + std::to_string(move.to + 1) + '\n';
     }
@@ -164,7 +220,13 @@ class Game {
             for(int j = i+1; j < size; j++){
                 auto& to = state[j];
 
-                bool moved = can_move_color(from, to);
+                bool moved;
+                try{
+                    moved = can_move_color(from, to, i, j);
+                } catch(std::exception& e){
+                    m_prompt_for_color(from, i);
+                    throw std::exception();
+                }
 
                 if(moved){
                     possible_moves.emplace_back(i,j);
@@ -178,8 +240,13 @@ class Game {
 
             for(int j = 0; j < i; j++){
                 auto& to = state[j];
-
-                bool moved = can_move_color(from, to);
+                bool moved;
+                try{
+                    moved = can_move_color(from, to, i, j);
+                } catch(std::exception& e){
+                    m_prompt_for_color(from, i);
+                    throw std::exception();
+                }
 
                 if(moved){
                     possible_moves.emplace_back(i,j);
@@ -197,13 +264,13 @@ public:
     }
 
     std::vector<std::string> solve() {
-        std::vector<std::string> moves_str;
+        std::vector<Move> moves_str;
 
         std::vector<std::vector<std::string>> avail;
         struct Data{
             std::vector<Colb> m_state;
-            std::vector<std::string> m_moves;
-            Data(std::vector<Colb> &state, std::vector<std::string> &moves){
+            std::vector<Move> m_moves;
+            Data(std::vector<Colb> &state, std::vector<Move> &moves){
                 m_state = std::move(state);
                 m_moves = std::move(moves);
             }
@@ -223,14 +290,22 @@ public:
                 moves_str = moves_string;
                 break;
             }
+            std::vector<Move> possible_moves;
 
-            auto possible_moves = get_possible_moves(curr_state_colbs);
+            try {
+                possible_moves = get_possible_moves(curr_state_colbs);
+            } catch (std::exception& e){
+                std::cout << "SO FAR WE HAVE THIS:\n";
+                for(auto& s : moves_string)
+                    std::cout << move_to_string(s);
+                return solve();
+            }
             for (const auto& move : possible_moves) {
 
                 std::vector<Colb> saved_state = curr_state_colbs;
                 auto str = moves_string;
                 move_color(saved_state[move.from], saved_state[move.to]);
-                str.emplace_back(move_to_string(move));
+                str.emplace_back(move);
                 stack.emplace(saved_state, str);
             }
             aboba++;
@@ -238,7 +313,12 @@ public:
         std::cout << "iterations: " << aboba << '\n';
         std::cout << "the solution takes " << moves_str.size() << " moves" << '\n';
 
-        return moves_str;
+        std::vector<std::string> m_str;
+        m_str.reserve(moves_str.size());
+        for(auto& m : moves_str)
+            m_str.emplace_back(std::move(move_to_string(m)));
+
+        return m_str;
     }
 
 };
